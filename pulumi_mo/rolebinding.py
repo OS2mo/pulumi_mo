@@ -11,35 +11,36 @@ from pulumi.dynamic import Resource
 from .base import AutoMOGraphQLProvider
 
 
-class PersonProvider(AutoMOGraphQLProvider):
-    collection: str = "person"
+class RoleBindingProvider(AutoMOGraphQLProvider):
+    collection: str = "rolebinding"
 
     def check(self, _olds: dict[str, Any], news: dict[str, Any]) -> CheckResult:
         failures: list[CheckFailure] = []
-        for attribute in ["given_name", "surname"]:
-            if attribute not in news or news[attribute] == "":
-                failures.append(
-                    CheckFailure(
-                        attribute,
-                        reason="Attribute cannot be the empty string",
-                    )
+        if "user_key" not in news or news["user_key"] == "":
+            failures.append(
+                CheckFailure(
+                    "user_key",
+                    reason="Attribute cannot be the empty string",
                 )
+            )
 
         return CheckResult(news, failures)
 
 
-class PersonArgs:
-    given_name: Input[str]
-    surname: Input[str]
+class RoleBindingArgs:
+    user_key: Input[str]
+    ituser: Input[str]
+    role: Input[str]
 
-    def __init__(self, given_name: str, surname: str) -> None:
-        self.given_name = given_name
-        self.surname = surname
+    def __init__(self, user_key: str, ituser: Input[str], role: Input[str]) -> None:
+        self.user_key = user_key
+        self.ituser = ituser
+        self.role = role
 
 
-class Person(Resource, name="Person"):
+class RoleBinding(Resource, name="RoleBinding"):
     def __init__(
-        self, name: str, args: PersonArgs, opts: ResourceOptions | None = None
+        self, name: str, args: RoleBindingArgs, opts: ResourceOptions | None = None
     ):
-        full_args = {"given_name": None, "surname": None, **vars(args)}
-        super().__init__(PersonProvider(), name, full_args, opts)
+        full_args = {"user_key": None, "ituser": None, "role": None, **vars(args)}
+        super().__init__(RoleBindingProvider(), name, full_args, opts)

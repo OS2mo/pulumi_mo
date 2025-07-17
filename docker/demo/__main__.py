@@ -15,6 +15,8 @@ from pulumi_mo.ituser import ITUser
 from pulumi_mo.ituser import ITUserArgs
 from pulumi_mo.person import Person
 from pulumi_mo.person import PersonArgs
+from pulumi_mo.rolebinding import RoleBinding
+from pulumi_mo.rolebinding import RoleBindingArgs
 
 
 def fetch_role_facet() -> str:
@@ -32,6 +34,9 @@ admin = Class("admin", ClassArgs("admin", facet=role_id))
 alya = Person("alya", PersonArgs("Alya", "Shadowsong"))
 suila = ITSystem("suila", ITSystemArgs("Suila"))
 ituser = ITUser("suila:alya", ITUserArgs("alya", alya.id, suila.id))
+rolebinding = RoleBinding(
+    "alya:suila:admin", RoleBindingArgs("alya:suila:admin", ituser.id, admin.id)
+)
 
 
 export("role_uuid", role_id)
@@ -39,3 +44,4 @@ export("admin_uuid", admin.id)
 export("person_uuid", alya.id)
 export("itsystem_uuid", suila.id)
 export("ituser_uuid", ituser.id)
+export("rolebinding_uuid", rolebinding.id)
