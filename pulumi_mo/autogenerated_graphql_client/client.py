@@ -24,6 +24,9 @@ from .input_types import ITSystemUpdateInput
 from .input_types import ITUserCreateInput
 from .input_types import ITUserFilter
 from .input_types import ITUserUpdateInput
+from .input_types import RoleBindingCreateInput
+from .input_types import RoleBindingFilter
+from .input_types import RoleBindingUpdateInput
 from .itsystem_create import ItsystemCreate
 from .itsystem_create import ItsystemCreateItsystemCreate
 from .itsystem_delete import ItsystemDelete
@@ -48,6 +51,14 @@ from .person_read import PersonRead
 from .person_read import PersonReadEmployees
 from .person_update import PersonUpdate
 from .person_update import PersonUpdateEmployeeUpdate
+from .rolebinding_create import RolebindingCreate
+from .rolebinding_create import RolebindingCreateRolebindingCreate
+from .rolebinding_delete import RolebindingDelete
+from .rolebinding_delete import RolebindingDeleteRolebindingDelete
+from .rolebinding_read import RolebindingRead
+from .rolebinding_read import RolebindingReadRolebindings
+from .rolebinding_update import RolebindingUpdate
+from .rolebinding_update import RolebindingUpdateRolebindingUpdate
 from .who_am_i import WhoAmI
 from .who_am_i import WhoAmIMe
 
@@ -348,6 +359,82 @@ class GraphQLClient(BaseClient):
         response = self.execute(query=query, variables=variables)
         data = self.get_data(response)
         return WhoAmI.parse_obj(data).me
+
+    def rolebinding_read(
+        self, filter: RoleBindingFilter
+    ) -> RolebindingReadRolebindings:
+        query = gql(
+            """
+            query rolebinding_read($filter: RoleBindingFilter!) {
+              rolebindings(filter: $filter) {
+                objects {
+                  current {
+                    user_key
+                    ituser {
+                      uuid
+                    }
+                    role {
+                      uuid
+                    }
+                  }
+                }
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"filter": filter}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return RolebindingRead.parse_obj(data).rolebindings
+
+    def rolebinding_create(
+        self, input: RoleBindingCreateInput
+    ) -> RolebindingCreateRolebindingCreate:
+        query = gql(
+            """
+            mutation rolebinding_create($input: RoleBindingCreateInput!) {
+              rolebinding_create(input: $input) {
+                uuid
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"input": input}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return RolebindingCreate.parse_obj(data).rolebinding_create
+
+    def rolebinding_update(
+        self, input: RoleBindingUpdateInput
+    ) -> RolebindingUpdateRolebindingUpdate:
+        query = gql(
+            """
+            mutation rolebinding_update($input: RoleBindingUpdateInput!) {
+              rolebinding_update(input: $input) {
+                uuid
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"input": input}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return RolebindingUpdate.parse_obj(data).rolebinding_update
+
+    def rolebinding_delete(self, uuid: UUID) -> RolebindingDeleteRolebindingDelete:
+        query = gql(
+            """
+            mutation rolebinding_delete($uuid: UUID!) {
+              rolebinding_delete(uuid: $uuid) {
+                uuid
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"uuid": uuid}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return RolebindingDelete.parse_obj(data).rolebinding_delete
 
     def _testing_facet_read(self, filter: FacetFilter) -> TestingFacetReadFacets:
         query = gql(
