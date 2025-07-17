@@ -7,6 +7,9 @@ from .input_types import EmployeeUpdateInput
 from .input_types import ITSystemCreateInput
 from .input_types import ITSystemFilter
 from .input_types import ITSystemUpdateInput
+from .input_types import ITUserCreateInput
+from .input_types import ITUserFilter
+from .input_types import ITUserUpdateInput
 from .itsystem_create import ItsystemCreate
 from .itsystem_create import ItsystemCreateItsystemCreate
 from .itsystem_delete import ItsystemDelete
@@ -15,6 +18,14 @@ from .itsystem_read import ItsystemRead
 from .itsystem_read import ItsystemReadItsystems
 from .itsystem_update import ItsystemUpdate
 from .itsystem_update import ItsystemUpdateItsystemUpdate
+from .ituser_create import ItuserCreate
+from .ituser_create import ItuserCreateItuserCreate
+from .ituser_delete import ItuserDelete
+from .ituser_delete import ItuserDeleteItuserDelete
+from .ituser_read import ItuserRead
+from .ituser_read import ItuserReadItusers
+from .ituser_update import ItuserUpdate
+from .ituser_update import ItuserUpdateItuserUpdate
 from .person_create import PersonCreate
 from .person_create import PersonCreateEmployeeCreate
 from .person_delete import PersonDelete
@@ -100,6 +111,76 @@ class GraphQLClient(BaseClient):
         response = self.execute(query=query, variables=variables)
         data = self.get_data(response)
         return ItsystemDelete.parse_obj(data).itsystem_delete
+
+    def ituser_read(self, filter: ITUserFilter) -> ItuserReadItusers:
+        query = gql(
+            """
+            query ituser_read($filter: ITUserFilter!) {
+              itusers(filter: $filter) {
+                objects {
+                  current {
+                    user_key
+                    itsystem {
+                      uuid
+                    }
+                    person {
+                      uuid
+                    }
+                  }
+                }
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"filter": filter}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return ItuserRead.parse_obj(data).itusers
+
+    def ituser_create(self, input: ITUserCreateInput) -> ItuserCreateItuserCreate:
+        query = gql(
+            """
+            mutation ituser_create($input: ITUserCreateInput!) {
+              ituser_create(input: $input) {
+                uuid
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"input": input}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return ItuserCreate.parse_obj(data).ituser_create
+
+    def ituser_update(self, input: ITUserUpdateInput) -> ItuserUpdateItuserUpdate:
+        query = gql(
+            """
+            mutation ituser_update($input: ITUserUpdateInput!) {
+              ituser_update(input: $input) {
+                uuid
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"input": input}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return ItuserUpdate.parse_obj(data).ituser_update
+
+    def ituser_delete(self, uuid: UUID) -> ItuserDeleteItuserDelete:
+        query = gql(
+            """
+            mutation ituser_delete($uuid: UUID!) {
+              ituser_delete(uuid: $uuid) {
+                uuid
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"uuid": uuid}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return ItuserDelete.parse_obj(data).ituser_delete
 
     def person_read(self, filter: EmployeeFilter) -> PersonReadEmployees:
         query = gql(

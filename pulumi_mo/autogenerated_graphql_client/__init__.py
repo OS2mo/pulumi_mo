@@ -151,6 +151,18 @@ from .itsystem_read import ItsystemReadItsystemsObjects
 from .itsystem_read import ItsystemReadItsystemsObjectsCurrent
 from .itsystem_update import ItsystemUpdate
 from .itsystem_update import ItsystemUpdateItsystemUpdate
+from .ituser_create import ItuserCreate
+from .ituser_create import ItuserCreateItuserCreate
+from .ituser_delete import ItuserDelete
+from .ituser_delete import ItuserDeleteItuserDelete
+from .ituser_read import ItuserRead
+from .ituser_read import ItuserReadItusers
+from .ituser_read import ItuserReadItusersObjects
+from .ituser_read import ItuserReadItusersObjectsCurrent
+from .ituser_read import ItuserReadItusersObjectsCurrentItsystem
+from .ituser_read import ItuserReadItusersObjectsCurrentPerson
+from .ituser_update import ItuserUpdate
+from .ituser_update import ItuserUpdateItuserUpdate
 from .person_create import PersonCreate
 from .person_create import PersonCreateEmployeeCreate
 from .person_delete import PersonDelete
@@ -252,6 +264,18 @@ __all__ = [
     "ItsystemUpdateItsystemUpdate",
     "ItuserBoundAddressFilter",
     "ItuserBoundRoleBindingFilter",
+    "ItuserCreate",
+    "ItuserCreateItuserCreate",
+    "ItuserDelete",
+    "ItuserDeleteItuserDelete",
+    "ItuserRead",
+    "ItuserReadItusers",
+    "ItuserReadItusersObjects",
+    "ItuserReadItusersObjectsCurrent",
+    "ItuserReadItusersObjectsCurrentItsystem",
+    "ItuserReadItusersObjectsCurrentPerson",
+    "ItuserUpdate",
+    "ItuserUpdateItuserUpdate",
     "KLECreateInput",
     "KLEFilter",
     "KLERegistrationFilter",
