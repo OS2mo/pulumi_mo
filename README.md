@@ -38,7 +38,8 @@ Previewing update (test):
  +   ├─ pulumi-python:dynamic:Resource  suila      create
  +   ├─ pulumi-python:dynamic:Resource  alya        create
  +   ├─ pulumi-python:dynamic:Resource  admin       create
- +   └─ pulumi-python:dynamic:Resource  suila:alya  create
+ +   ├─ pulumi-python:dynamic:Resource  suila:alya        create
+ +   └─ pulumi-python:dynamic:Resource  alya:suila:admin  create
 
 Outputs:
     admin_uuid   : [unknown]
@@ -46,10 +47,10 @@ Outputs:
     ituser_uuid  : [unknown]
     person_uuid  : [unknown]
     role_uuid    : "f7be57ab-d5b8-4d46-b1fe-6c7a04812edb"
-
+    rolebinding_uuid: [unknown]
 
 Resources:
-    + 5 to create
+    + 6 to create
 ```
 Showing that `pulumi` is running correctly.
 
