@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: Magenta ApS <https://magenta.dk>
+# SPDX-License-Identifier: MPL-2.0
+version = 1
+SPDX-PackageName = "pulumi_mo"
+SPDX-PackageSupplier = "Magenta ApS <info@magenta.dk>"
+
+[[annotations]]
+path = ["README.md", "poetry.lock"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Magenta ApS <info@magenta.dk>"
+SPDX-License-Identifier = "MPL-2.0"
