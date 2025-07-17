@@ -8,7 +8,6 @@ from pulumi import Input
 from pulumi import ResourceOptions
 from pulumi.dynamic import CheckFailure
 from pulumi.dynamic import CheckResult
-from pulumi.dynamic import CreateResult
 from pulumi.dynamic import Resource
 from pulumi.dynamic import UpdateResult
 from pydantic import parse_obj_as
@@ -53,13 +52,13 @@ class ITSystemProvider(AbstractMOGraphQLProvider):
     def read_filter_model(self) -> type[BaseModel]:
         return ITSystemFilter
 
-    def create(self, props: dict[str, Any]) -> CreateResult:
-        result = self.session.itsystem_create(
-            input=parse_obj_as(
-                ITSystemCreateInput, {**props, "validity": DEFAULT_VALIDITY}
-            )
-        )
-        return CreateResult(str(result.uuid), {**props})
+    @property
+    def create_method(self) -> Callable:
+        return self.session.itsystem_create
+
+    @property
+    def create_input_model(self) -> type[BaseModel]:
+        return ITSystemCreateInput
 
     def update(
         self, id: str, _olds: dict[str, Any], props: dict[str, Any]
