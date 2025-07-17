@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: Magenta ApS <https://magenta.dk>
+# SPDX-License-Identifier: MPL-2.0
+
+query itsystem_read($filter: ITSystemFilter!) {
+  itsystems(filter: $filter) {
+    objects {
+      current {
+        user_key
+        name
+      }
+    }
+  }
+}
+
+mutation itsystem_create($input: ITSystemCreateInput!) {
+  itsystem_create(input: $input) {
+    uuid
+  }
+}
+
+mutation itsystem_update($input: ITSystemUpdateInput!) {
+  itsystem_update(input: $input) {
+    uuid
+  }
+}
+
+mutation itsystem_delete($uuid: UUID!) {
+  itsystem_delete(uuid: $uuid) {
+    uuid
+  }
+}
