@@ -37,7 +37,7 @@ Previewing update (test):
  +   pulumi:pulumi:Stack  demo-test  create
 
 Outputs:
-    exp_static: "foo"
+    actor_uuid: "d1fec000-baad-c0de-0000-004449504558"
 
 Resources:
     + 1 to create
