@@ -35,16 +35,18 @@ Logged in to f813025ee57a as root (postgres://fastramqpi:fastramqpi@db:5432/fast
 Previewing update (test):
      Type                 Name       Plan
  +   pulumi:pulumi:Stack  demo-test  create
+ +   ├─ pulumi-python:dynamic:Resource  suila      create
  +   └─ pulumi-python:dynamic:Resource  alya       create
 
 Outputs:
     actor_uuid: "d1fec000-baad-c0de-0000-004449504558"
-    person_uuid: [unknown]
+    itsystem_uuid: [unknown]
+    person_uuid  : [unknown]
 
 Resources:
-    + 2 to create
+    + 3 to create
 ```
 Showing that `pulumi` is running correctly.
 
 Additionally you can now run `pulumi up` to effectuate the changes.
-In this case creating a new person (alya) in MO.
+In this case creating a new person (alya) and an ITSystem (suila) in MO.

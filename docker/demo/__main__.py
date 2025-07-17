@@ -5,6 +5,8 @@ from pulumi import Output
 from pulumi import export
 
 from pulumi_mo.base import create_graphql_client_from_config
+from pulumi_mo.itsystem import ITSystem
+from pulumi_mo.itsystem import ITSystemArgs
 from pulumi_mo.person import Person
 from pulumi_mo.person import PersonArgs
 
@@ -17,6 +19,9 @@ def fetch_actor_uuid() -> str:
 
 
 alya = Person("alya", PersonArgs("Alya", "Shadowsong"))
+suila = ITSystem("suila", ITSystemArgs("Suila"))
+
 
 export("actor_uuid", Output.from_input(fetch_actor_uuid()))
 export("person_uuid", alya.id)
+export("itsystem_uuid", suila.id)
