@@ -11,6 +11,7 @@ services:
       FASTRAMQPI__DATABASE__HOST: "db"
       FASTRAMQPI__DATABASE__NAME: "pulumi_mo"
     volumes:
+      - ./tests/:/app/tests/:ro
       # Demo mapping
       - ./docker/entrypoint.sh:/app/entrypoint.sh:ro
       - ./docker/demo/Pulumi.yaml:/app/Pulumi.yaml:ro

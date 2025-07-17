@@ -15,6 +15,10 @@ keywords = ["os2mo"]
 python = "^3.11"
 pulumi = "^3"
 
+[tool.poetry.group.test.dependencies]
+pytest = "^8"
+pytest-asyncio = "^0.24"
+
 [tool.poetry.group.pre-commit.dependencies]
 pre-commit = "^3"
 ruff = "^0.9"
@@ -24,6 +28,9 @@ mypy = "^1"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_mode="auto"
 
 [tool.mypy]
 python_version = "3.11"

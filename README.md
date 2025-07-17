@@ -20,7 +20,12 @@ Then you can enter into the `pulumi` container using:
 ```
 docker compose exec pulumi_mo /bin/bash
 ```
-After which you run the `pulumi` demo using:
+After which you can either run the tests using:
+```
+poetry run pytest tests
+```
+With the expected output of all tests passing.
+Or you can run the `pulumi` demo using:
 ```
 ./entrypoint.sh
 ```
