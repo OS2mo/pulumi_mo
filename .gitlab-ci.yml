@@ -36,6 +36,7 @@ include:
       - gitlab-ci-templates/common/no-interrupt.v1.yml
       - gitlab-ci-templates/common/conventional-commits.v1.yml
       - gitlab-ci-templates/common/conventional-commits-changelog.v1.yml
+      - gitlab-ci-templates/python/pypi-cc.v1.yml
   - project: labs/salt-automation
     file:
       - gitlab-ci-templates/common/pre-commit.v1.yml
