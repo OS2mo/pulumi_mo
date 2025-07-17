@@ -1,0 +1,28 @@
+# SPDX-FileCopyrightText: Magenta ApS <https://magenta.dk>
+# SPDX-License-Identifier: MPL-2.0
+services:
+  pulumi_mo:
+    entrypoint: ["sleep", "infinity"]
+    build: .
+    environment:
+      # Database
+      FASTRAMQPI__DATABASE__USER: "pulumi_mo"
+      FASTRAMQPI__DATABASE__PASSWORD: "pulumi_mo"
+      FASTRAMQPI__DATABASE__HOST: "db"
+      FASTRAMQPI__DATABASE__NAME: "pulumi_mo"
+    volumes:
+      # Demo mapping
+      - ./docker/entrypoint.sh:/app/entrypoint.sh:ro
+      - ./docker/demo/Pulumi.yaml:/app/Pulumi.yaml:ro
+      - ./docker/demo/__main__.py:/app/__main__.py:ro
+    networks:
+      - default
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: "pulumi_mo"
+      POSTGRES_PASSWORD: "pulumi_mo"
+      POSTGRES_DB: "pulumi_mo"
+    networks:
+      - default

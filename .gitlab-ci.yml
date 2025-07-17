@@ -9,6 +9,7 @@ stages:
 
 variables:
   PRECOMMIT_USE_POETRY: "true"
+  # This should match the version in the Dockerfile
   POETRY_VERSION: "2.1.3"
 
 # Conditions

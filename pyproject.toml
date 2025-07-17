@@ -13,6 +13,7 @@ keywords = ["os2mo"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+pulumi = "^3"
 
 [tool.poetry.group.pre-commit.dependencies]
 pre-commit = "^3"
