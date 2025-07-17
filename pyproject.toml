@@ -10,6 +10,8 @@ readme = "README.md"
 homepage = "https://magenta.dk/"
 repository = "https://git.magenta.dk/rammearkitektur/pulumi_mo"
 keywords = ["os2mo"]
+packages = [ { include = "pulumi_mo" } ]
+include = ["pulumi_mo/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.11"

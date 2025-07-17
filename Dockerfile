@@ -27,6 +27,7 @@ RUN python -m venv $VIRTUAL_ENV
 COPY pyproject.toml poetry.lock* ./
 RUN poetry install --no-root
 
+COPY pulumi_mo ./pulumi_mo
 COPY docker/demo ./
 COPY docker/entrypoint.sh ./
 
