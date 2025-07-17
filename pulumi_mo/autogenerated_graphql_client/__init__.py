@@ -188,6 +188,18 @@ from .person_read import PersonReadEmployeesObjects
 from .person_read import PersonReadEmployeesObjectsCurrent
 from .person_update import PersonUpdate
 from .person_update import PersonUpdateEmployeeUpdate
+from .rolebinding_create import RolebindingCreate
+from .rolebinding_create import RolebindingCreateRolebindingCreate
+from .rolebinding_delete import RolebindingDelete
+from .rolebinding_delete import RolebindingDeleteRolebindingDelete
+from .rolebinding_read import RolebindingRead
+from .rolebinding_read import RolebindingReadRolebindings
+from .rolebinding_read import RolebindingReadRolebindingsObjects
+from .rolebinding_read import RolebindingReadRolebindingsObjectsCurrent
+from .rolebinding_read import RolebindingReadRolebindingsObjectsCurrentItuser
+from .rolebinding_read import RolebindingReadRolebindingsObjectsCurrentRole
+from .rolebinding_update import RolebindingUpdate
+from .rolebinding_update import RolebindingUpdateRolebindingUpdate
 from .who_am_i import WhoAmI
 from .who_am_i import WhoAmIMe
 from .who_am_i import WhoAmIMeActor
@@ -371,6 +383,18 @@ __all__ = [
     "RoleBindingTerminateInput",
     "RoleBindingUpdateInput",
     "RoleRegistrationFilter",
+    "RolebindingCreate",
+    "RolebindingCreateRolebindingCreate",
+    "RolebindingDelete",
+    "RolebindingDeleteRolebindingDelete",
+    "RolebindingRead",
+    "RolebindingReadRolebindings",
+    "RolebindingReadRolebindingsObjects",
+    "RolebindingReadRolebindingsObjectsCurrent",
+    "RolebindingReadRolebindingsObjectsCurrentItuser",
+    "RolebindingReadRolebindingsObjectsCurrentRole",
+    "RolebindingUpdate",
+    "RolebindingUpdateRolebindingUpdate",
     "TestingFacetRead",
     "TestingFacetReadFacets",
     "TestingFacetReadFacetsObjects",

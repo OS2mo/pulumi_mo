@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: Magenta ApS <https://magenta.dk>
+# SPDX-License-Identifier: MPL-2.0
+
+query rolebinding_read($filter: RoleBindingFilter!) {
+  rolebindings(filter: $filter) {
+    objects {
+      current {
+        user_key
+        ituser {
+          uuid
+        }
+        role {
+          uuid
+        }
+      }
+    }
+  }
+}
+
+mutation rolebinding_create($input: RoleBindingCreateInput!) {
+  rolebinding_create(input: $input) {
+    uuid
+  }
+}
+
+mutation rolebinding_update($input: RoleBindingUpdateInput!) {
+  rolebinding_update(input: $input) {
+    uuid
+  }
+}
+
+mutation rolebinding_delete($uuid: UUID!) {
+  rolebinding_delete(uuid: $uuid) {
+    uuid
+  }
+}
