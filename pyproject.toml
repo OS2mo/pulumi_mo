@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: Magenta ApS <https://magenta.dk>
+# SPDX-License-Identifier: MPL-2.0
+[tool.poetry]
+name = "pulumi_mo"
+version = "0.0.0"  # versioning handled by conventional commits
+description = "Dynamic Pulumi provider for OS2mo"
+authors = ["Magenta ApS <info@magenta.dk>"]
+license = "MPL-2.0"
+readme = "README.md"
+homepage = "https://magenta.dk/"
+repository = "https://git.magenta.dk/rammearkitektur/pulumi_mo"
+keywords = ["os2mo"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
