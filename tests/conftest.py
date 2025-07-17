@@ -9,6 +9,8 @@ from contextlib import AbstractContextManager
 from contextlib import contextmanager
 
 import pytest
+from pulumi.automation import ConfigMap
+from pulumi.automation import ConfigValue
 from pulumi.automation import LocalWorkspaceOptions
 from pulumi.automation import ProjectBackend
 from pulumi.automation import ProjectSettings
@@ -100,3 +102,17 @@ def graphql_client(
     )
     with graphql_client as session:
         yield session
+
+
+@pytest.fixture
+def mo_config_map(
+    mo_url: str, mo_client_id: str, mo_client_secret: str, mo_auth_server: str | None
+) -> ConfigMap:
+    config: ConfigMap = {
+        "mora_base": ConfigValue(value=mo_url),
+        "mora_client_id": ConfigValue(value=mo_client_id),
+        "mora_client_secret": ConfigValue(value=mo_client_secret, secret=True),
+    }
+    if mo_auth_server:
+        config["mora_auth_server"] = ConfigValue(value=mo_auth_server)
+    return config
