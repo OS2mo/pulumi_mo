@@ -92,17 +92,9 @@ class AbstractMOGraphQLProvider(ABC, MOGraphQLProvider):
         raise NotImplementedError
 
     @property
-    def read_filter_model(self) -> type[BaseModel]:
-        return get_filter_model_from_query(self.read_method)
-
-    @property
     @abstractmethod
     def create_method(self) -> Callable:
         raise NotImplementedError
-
-    @property
-    def create_input_model(self) -> type[BaseModel]:
-        return get_input_model_from_mutator(self.create_method)
 
     @property
     @abstractmethod
@@ -110,16 +102,13 @@ class AbstractMOGraphQLProvider(ABC, MOGraphQLProvider):
         raise NotImplementedError
 
     @property
-    def update_input_model(self) -> type[BaseModel]:
-        return get_input_model_from_mutator(self.update_method)
-
-    @property
     @abstractmethod
     def delete_method(self) -> Callable:
         raise NotImplementedError
 
     def _read_by_filter(self, filter: dict[str, Any]) -> dict[str, Any] | None:
-        result = self.read_method(filter=parse_obj_as(self.read_filter_model, filter))
+        filter_model = get_filter_model_from_query(self.read_method)
+        result = self.read_method(filter=parse_obj_as(filter_model, filter))
         entity = only(result.objects)
         if entity is None or entity.current is None:
             return None
@@ -138,21 +127,21 @@ class AbstractMOGraphQLProvider(ABC, MOGraphQLProvider):
         return ReadResult(id, result)
 
     def create(self, props: dict[str, Any]) -> CreateResult:
-        needs_validity = "validity" in self.create_input_model.__fields__
+        input_model = get_input_model_from_mutator(self.create_method)
+        needs_validity = "validity" in input_model.__fields__
         payload = {**props, "validity": DEFAULT_VALIDITY} if needs_validity else props
 
-        result = self.create_method(
-            input=parse_obj_as(self.create_input_model, payload)
-        )
+        result = self.create_method(input=parse_obj_as(input_model, payload))
         return CreateResult(str(result.uuid), props)
 
     def update(
         self, id: str, _olds: dict[str, Any], props: dict[str, Any]
     ) -> UpdateResult:
+        input_model = get_input_model_from_mutator(self.update_method)
         uuid = UUID(id)
         self.update_method(
             input=parse_obj_as(
-                self.update_input_model,
+                input_model,
                 {**props, "uuid": uuid, "validity": DEFAULT_VALIDITY},
             )
         )
