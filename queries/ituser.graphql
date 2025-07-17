@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: Magenta ApS <https://magenta.dk>
+# SPDX-License-Identifier: MPL-2.0
+
+query ituser_read($filter: ITUserFilter!) {
+  itusers(filter: $filter) {
+    objects {
+      current {
+        user_key
+        itsystem {
+          uuid
+        }
+        person {
+          uuid
+        }
+      }
+    }
+  }
+}
+
+mutation ituser_create($input: ITUserCreateInput!) {
+  ituser_create(input: $input) {
+    uuid
+  }
+}
+
+mutation ituser_update($input: ITUserUpdateInput!) {
+  ituser_update(input: $input) {
+    uuid
+  }
+}
+
+mutation ituser_delete($uuid: UUID!) {
+  ituser_delete(uuid: $uuid) {
+    uuid
+  }
+}
