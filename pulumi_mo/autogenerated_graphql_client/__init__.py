@@ -1,5 +1,17 @@
 from .base_client import BaseClient
 from .base_model import BaseModel
+from .class_create import ClassCreate
+from .class_create import ClassCreateClassCreate
+from .class_delete import ClassDelete
+from .class_delete import ClassDeleteClassDelete
+from .class_read import ClassRead
+from .class_read import ClassReadClasses
+from .class_read import ClassReadClassesObjects
+from .class_read import ClassReadClassesObjectsCurrent
+from .class_read import ClassReadClassesObjectsCurrentFacet
+from .class_read import ClassReadClassesObjectsCurrentItSystem
+from .class_update import ClassUpdate
+from .class_update import ClassUpdateClassUpdate
 from .client import GraphQLClient
 from .enums import AccessLogModel
 from .enums import FileStore
@@ -192,11 +204,23 @@ __all__ = [
     "AssociationUpdateInput",
     "BaseClient",
     "BaseModel",
+    "ClassCreate",
+    "ClassCreateClassCreate",
     "ClassCreateInput",
+    "ClassDelete",
+    "ClassDeleteClassDelete",
     "ClassFilter",
     "ClassOwnerFilter",
+    "ClassRead",
+    "ClassReadClasses",
+    "ClassReadClassesObjects",
+    "ClassReadClassesObjectsCurrent",
+    "ClassReadClassesObjectsCurrentFacet",
+    "ClassReadClassesObjectsCurrentItSystem",
     "ClassRegistrationFilter",
     "ClassTerminateInput",
+    "ClassUpdate",
+    "ClassUpdateClassUpdate",
     "ClassUpdateInput",
     "ConfigurationFilter",
     "DescendantParentBoundOrganisationUnitFilter",

@@ -1,0 +1,37 @@
+# SPDX-FileCopyrightText: Magenta ApS <https://magenta.dk>
+# SPDX-License-Identifier: MPL-2.0
+
+query class_read($filter: ClassFilter!) {
+  classes(filter: $filter) {
+    objects {
+      current {
+        user_key
+        name
+        it_system {
+          uuid
+        }
+        facet {
+          uuid
+        }
+      }
+    }
+  }
+}
+
+mutation class_create($input: ClassCreateInput!) {
+  class_create(input: $input) {
+    uuid
+  }
+}
+
+mutation class_update($input: ClassUpdateInput!) {
+  class_update(input: $input) {
+    uuid
+  }
+}
+
+mutation class_delete($uuid: UUID!) {
+  class_delete(uuid: $uuid) {
+    uuid
+  }
+}

@@ -1,6 +1,17 @@
 from uuid import UUID
 
 from .base_client import BaseClient
+from .class_create import ClassCreate
+from .class_create import ClassCreateClassCreate
+from .class_delete import ClassDelete
+from .class_delete import ClassDeleteClassDelete
+from .class_read import ClassRead
+from .class_read import ClassReadClasses
+from .class_update import ClassUpdate
+from .class_update import ClassUpdateClassUpdate
+from .input_types import ClassCreateInput
+from .input_types import ClassFilter
+from .input_types import ClassUpdateInput
 from .input_types import EmployeeCreateInput
 from .input_types import EmployeeFilter
 from .input_types import EmployeeUpdateInput
@@ -43,6 +54,77 @@ def gql(q: str) -> str:
 
 
 class GraphQLClient(BaseClient):
+    def class_read(self, filter: ClassFilter) -> ClassReadClasses:
+        query = gql(
+            """
+            query class_read($filter: ClassFilter!) {
+              classes(filter: $filter) {
+                objects {
+                  current {
+                    user_key
+                    name
+                    it_system {
+                      uuid
+                    }
+                    facet {
+                      uuid
+                    }
+                  }
+                }
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"filter": filter}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return ClassRead.parse_obj(data).classes
+
+    def class_create(self, input: ClassCreateInput) -> ClassCreateClassCreate:
+        query = gql(
+            """
+            mutation class_create($input: ClassCreateInput!) {
+              class_create(input: $input) {
+                uuid
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"input": input}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return ClassCreate.parse_obj(data).class_create
+
+    def class_update(self, input: ClassUpdateInput) -> ClassUpdateClassUpdate:
+        query = gql(
+            """
+            mutation class_update($input: ClassUpdateInput!) {
+              class_update(input: $input) {
+                uuid
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"input": input}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return ClassUpdate.parse_obj(data).class_update
+
+    def class_delete(self, uuid: UUID) -> ClassDeleteClassDelete:
+        query = gql(
+            """
+            mutation class_delete($uuid: UUID!) {
+              class_delete(uuid: $uuid) {
+                uuid
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"uuid": uuid}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return ClassDelete.parse_obj(data).class_delete
+
     def itsystem_read(self, filter: ITSystemFilter) -> ItsystemReadItsystems:
         query = gql(
             """
