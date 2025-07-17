@@ -141,6 +141,16 @@ from .input_types import UuidsBoundITUserFilter
 from .input_types import UuidsBoundLeaveFilter
 from .input_types import UuidsBoundOrganisationUnitFilter
 from .input_types import ValidityInput
+from .person_create import PersonCreate
+from .person_create import PersonCreateEmployeeCreate
+from .person_delete import PersonDelete
+from .person_delete import PersonDeleteEmployeeDelete
+from .person_read import PersonRead
+from .person_read import PersonReadEmployees
+from .person_read import PersonReadEmployeesObjects
+from .person_read import PersonReadEmployeesObjectsCurrent
+from .person_update import PersonUpdate
+from .person_update import PersonUpdateEmployeeUpdate
 from .who_am_i import WhoAmI
 from .who_am_i import WhoAmIMe
 from .who_am_i import WhoAmIMeActor
@@ -270,6 +280,16 @@ __all__ = [
     "ParentBoundOrganisationUnitFilter",
     "ParentsBoundClassFilter",
     "ParentsBoundFacetFilter",
+    "PersonCreate",
+    "PersonCreateEmployeeCreate",
+    "PersonDelete",
+    "PersonDeleteEmployeeDelete",
+    "PersonRead",
+    "PersonReadEmployees",
+    "PersonReadEmployeesObjects",
+    "PersonReadEmployeesObjectsCurrent",
+    "PersonUpdate",
+    "PersonUpdateEmployeeUpdate",
     "RAOpenValidityInput",
     "RAValidityInput",
     "RegistrationFilter",

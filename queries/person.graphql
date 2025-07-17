@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: Magenta ApS <https://magenta.dk>
+# SPDX-License-Identifier: MPL-2.0
+
+query person_read($filter: EmployeeFilter!) {
+  employees(filter: $filter) {
+    objects {
+      current {
+        given_name
+        surname
+      }
+    }
+  }
+}
+
+mutation person_create($input: EmployeeCreateInput!) {
+  employee_create(input: $input) {
+    uuid
+  }
+}
+
+mutation person_update($input: EmployeeUpdateInput!) {
+  employee_update(input: $input) {
+    uuid
+  }
+}
+
+mutation person_delete($uuid: UUID!) {
+  employee_delete(uuid: $uuid) {
+    uuid
+  }
+}
