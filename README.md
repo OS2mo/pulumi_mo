@@ -36,17 +36,19 @@ Previewing update (test):
      Type                 Name       Plan
  +   pulumi:pulumi:Stack  demo-test  create
  +   ├─ pulumi-python:dynamic:Resource  suila      create
- +   └─ pulumi-python:dynamic:Resource  alya       create
+ +   ├─ pulumi-python:dynamic:Resource  alya        create
+ +   └─ pulumi-python:dynamic:Resource  suila:alya  create
 
 Outputs:
     actor_uuid: "d1fec000-baad-c0de-0000-004449504558"
     itsystem_uuid: [unknown]
+    ituser_uuid  : [unknown]
     person_uuid  : [unknown]
 
 Resources:
-    + 3 to create
+    + 4 to create
 ```
 Showing that `pulumi` is running correctly.
 
 Additionally you can now run `pulumi up` to effectuate the changes.
-In this case creating a new person (alya) and an ITSystem (suila) in MO.
+In this case creating three resources in MO.
