@@ -3843,6 +3843,9 @@ type Mutation {
   """Terminate a rolebinding."""
   rolebinding_terminate(input: RoleBindingTerminateInput!): RoleBindingResponse!
 
+  "Deletes a rolebinding.\n**Warning**:\nThis mutator does bitemporal deletion, **not** temporal termination.\nDo **not** use this mutator **unless** you **fully understand** its implications.\n\nBitemporal deletion and temporal termination are **very** different operations and should **not** be confused.\nIf you do not know which of the operations you need, you most likely need temporal termination.\n\nBitemporal deletion works on the bitemporal time-axis, and should **only** be used by clients that **fully understand** the underlying bitemporal model, including how a bitemporal delete affects the registration history.\n\nAfter this call the deleted entity will no longer show up in **any** temporal listing.\n\nNote:\nIt is currently the callers responsibility to ensure that references are dealt with before doing bitemporal deletions.\nFailure to do so **will** leave dangling references breaking temporal foreign-keys, and potentially breaking invariants in the data.\n"
+  rolebinding_delete(uuid: UUID!): RoleBindingResponse!
+
   """Refresh rolebindings."""
   rolebinding_refresh(
     filter: RoleBindingFilter = null
