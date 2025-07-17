@@ -48,6 +48,11 @@ include:
       pytest_addopts: "-m 'not integration_test'"
     rules:
       - <<: *if-merge-request
+  - project: rammearkitektur/os2mo
+    file:
+      - gitlab-ci-templates/integration-test-meta.v1.yml
+    rules:
+      - <<: *if-merge-request
 
 
 # Workflow
@@ -56,4 +61,12 @@ workflow:
   rules:
     - <<: *if-tag
     - <<: *if-default-branch-refs
+    - <<: *if-merge-request
+
+
+Integration-test:
+  extends:
+    - .integration-test:mo
+  parallel: 2
+  rules:
     - <<: *if-merge-request
