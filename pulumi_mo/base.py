@@ -13,6 +13,7 @@ from pulumi.dynamic import ConfigureRequest
 from pulumi.dynamic import CreateResult
 from pulumi.dynamic import ReadResult
 from pulumi.dynamic import ResourceProvider
+from pulumi.dynamic import UpdateResult
 from pulumi.dynamic.config import Config as DynamicConfig
 from pydantic import BaseModel
 from pydantic import parse_obj_as
@@ -91,6 +92,16 @@ class AbstractMOGraphQLProvider(ABC, MOGraphQLProvider):
     def create_input_model(self) -> type[BaseModel]:
         raise NotImplementedError
 
+    @property
+    @abstractmethod
+    def update_method(self) -> Callable:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def update_input_model(self) -> type[BaseModel]:
+        raise NotImplementedError
+
     def _read_by_filter(self, filter: dict[str, Any]) -> dict[str, Any] | None:
         result = self.read_method(filter=parse_obj_as(self.read_filter_model, filter))
         entity = only(result.objects)
@@ -118,3 +129,15 @@ class AbstractMOGraphQLProvider(ABC, MOGraphQLProvider):
             input=parse_obj_as(self.create_input_model, payload)
         )
         return CreateResult(str(result.uuid), props)
+
+    def update(
+        self, id: str, _olds: dict[str, Any], props: dict[str, Any]
+    ) -> UpdateResult:
+        uuid = UUID(id)
+        self.update_method(
+            input=parse_obj_as(
+                self.update_input_model,
+                {**props, "uuid": uuid, "validity": DEFAULT_VALIDITY},
+            )
+        )
+        return UpdateResult({**props})
