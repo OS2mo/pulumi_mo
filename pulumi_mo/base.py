@@ -150,3 +150,26 @@ class AbstractMOGraphQLProvider(ABC, MOGraphQLProvider):
     def delete(self, id: str, props: dict[str, Any]) -> None:
         uuid = UUID(id)
         self.delete_method(uuid=uuid)
+
+
+class AutoMOGraphQLProvider(AbstractMOGraphQLProvider):
+    collection: str
+
+    def get_client_method(self, operation: str) -> Callable:
+        return cast(Callable, getattr(self.session, self.collection + "_" + operation))
+
+    @property
+    def read_method(self) -> Callable:
+        return self.get_client_method("read")
+
+    @property
+    def create_method(self) -> Callable:
+        return self.get_client_method("create")
+
+    @property
+    def update_method(self) -> Callable:
+        return self.get_client_method("update")
+
+    @property
+    def delete_method(self) -> Callable:
+        return self.get_client_method("delete")
