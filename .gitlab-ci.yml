@@ -17,6 +17,9 @@ variables:
   # This should match the version in the Dockerfile
   POETRY_VERSION: "2.1.3"
 
+  # This should match the version in the Dockerfile
+  PULUMI_VERSION: "3.182.0"
+
 # Conditions
 #############
 # Global Conditions
@@ -40,13 +43,7 @@ include:
   - project: labs/salt-automation
     file:
       - gitlab-ci-templates/common/pre-commit.v1.yml
-    rules:
-      - <<: *if-merge-request
-  - project: labs/salt-automation
-    file:
-      - gitlab-ci-templates/python/pytest.v1.yml
-    inputs:
-      pytest_addopts: "-m 'not integration_test'"
+      - gitlab-ci-templates/python/pytest-meta.v1.yml
     rules:
       - <<: *if-merge-request
   - project: rammearkitektur/os2mo
@@ -68,6 +65,27 @@ workflow:
 Integration-test:
   extends:
     - .integration-test:mo
+  before_script:
+    - wget https://get.pulumi.com/releases/sdk/pulumi-v${PULUMI_VERSION}-linux-x64.tar.gz -O- | tar -zx --strip-components=1 -C /usr/bin
+    - !reference [.integration-test:mo, before_script]
   parallel: 2
   rules:
     - <<: *if-merge-request
+
+
+Test:
+  extends: .pytest
+  before_script:
+    - wget https://get.pulumi.com/releases/sdk/pulumi-v${PULUMI_VERSION}-linux-x64.tar.gz -O- | tar -zx --strip-components=1 -C /usr/bin
+    - !reference [.pytest, before_script]
+  variables:
+    PYTEST_ADDOPTS: "-m 'not integration_test'"
+
+
+# These jobs MUST NOT use `needs: [Test]` to allow integration test mix-ins:
+Export coverage:
+  extends: .export_coverage
+
+
+Check coverage:
+  extends: .check_coverage
