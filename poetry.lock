@@ -342,7 +342,7 @@ version = "1.17.1"
 description = "Foreign Function Interface for Python calling C code."
 optional = false
 python-versions = ">=3.8"
-groups = ["main"]
+groups = ["main", "pre-commit"]
 markers = "platform_python_implementation != \"PyPy\""
 files = [
     {file = "cffi-1.17.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:df8b1c11f177bc2313ec4b2d46baec87a5f3e71fc8b45dab2ee7cae86d9aba14"},
@@ -645,7 +645,7 @@ version = "45.0.5"
 description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
 optional = false
 python-versions = "!=3.9.0,!=3.9.1,>=3.7"
-groups = ["main"]
+groups = ["main", "pre-commit"]
 files = [
     {file = "cryptography-45.0.5-cp311-abi3-macosx_10_9_universal2.whl", hash = "sha256:101ee65078f6dd3e5a028d4f19c07ffa4dd22cce6a20eaa160f8b5219911e7d8"},
     {file = "cryptography-45.0.5-cp311-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:3a264aae5f7fbb089dbc01e0242d3b67dffe3e6292e1f5182122bdf58e65215d"},
@@ -2015,7 +2015,7 @@ version = "2.22"
 description = "C parser in Python"
 optional = false
 python-versions = ">=3.8"
-groups = ["main"]
+groups = ["main", "pre-commit"]
 markers = "platform_python_implementation != \"PyPy\""
 files = [
     {file = "pycparser-2.22-py3-none-any.whl", hash = "sha256:c3702b6d3dd8c7abc1afa565d7e63d53a1d0bd86cdc24edd75470f4de499cfcc"},
@@ -2616,6 +2616,21 @@ slack = ["slack-sdk"]
 telegram = ["requests"]
 
 [[package]]
+name = "types-authlib"
+version = "1.6.0.20250711"
+description = "Typing stubs for Authlib"
+optional = false
+python-versions = ">=3.9"
+groups = ["pre-commit"]
+files = [
+    {file = "types_authlib-1.6.0.20250711-py3-none-any.whl", hash = "sha256:8e63e14e10b8637346528bdfb3fe6d59f3ff836f2222c241badda4374c7be7a2"},
+    {file = "types_authlib-1.6.0.20250711.tar.gz", hash = "sha256:3ba475d5172273862ff5087f3ee150a1f106b7d8fca8be6807ed58aa0bc8fb69"},
+]
+
+[package.dependencies]
+cryptography = "*"
+
+[[package]]
 name = "typing-extensions"
 version = "4.14.1"
 description = "Backported and Experimental Type Hints for Python 3.9+"
@@ -2916,4 +2931,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "8be9242f97e450dcdc87f2f842ddbdd2c141d587421c818c549ab984a6e39c00"
+content-hash = "21b618d98280d73a0d396ea511ebdcf93ce87dac792ea0068a78f5af6a670905"
