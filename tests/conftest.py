@@ -9,6 +9,8 @@ from contextlib import AbstractContextManager
 from contextlib import contextmanager
 
 import pytest
+from pulumi.automation import ConfigMap
+from pulumi.automation import ConfigValue
 from pulumi.automation import LocalWorkspaceOptions
 from pulumi.automation import ProjectBackend
 from pulumi.automation import ProjectSettings
@@ -26,15 +28,25 @@ def randomword(length: int) -> str:
 
 
 @pytest.fixture
-def project_name(request: pytest.FixtureRequest) -> str:
+def test_name(request: pytest.FixtureRequest) -> str:
     testname = request.node.name
     assert isinstance(testname, str)
     return testname
 
 
 @pytest.fixture
-def stack_name(project_name: str) -> str:
-    return fully_qualified_stack_name("organization", project_name, randomword(10))
+def project_name(test_name: str) -> str:
+    return test_name
+
+
+@pytest.fixture
+def stack_identifier() -> str:
+    return randomword(10)
+
+
+@pytest.fixture
+def stack_name(project_name: str, stack_identifier: str) -> str:
+    return fully_qualified_stack_name("organization", project_name, stack_identifier)
 
 
 @pytest.fixture(autouse=True)
@@ -100,3 +112,17 @@ def graphql_client(
     )
     with graphql_client as session:
         yield session
+
+
+@pytest.fixture
+def mo_config_map(
+    mo_url: str, mo_client_id: str, mo_client_secret: str, mo_auth_server: str | None
+) -> ConfigMap:
+    config: ConfigMap = {
+        "mora_base": ConfigValue(value=mo_url),
+        "mora_client_id": ConfigValue(value=mo_client_id),
+        "mora_client_secret": ConfigValue(value=mo_client_secret, secret=True),
+    }
+    if mo_auth_server:
+        config["mora_auth_server"] = ConfigValue(value=mo_auth_server)
+    return config
