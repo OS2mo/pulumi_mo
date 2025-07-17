@@ -141,6 +141,16 @@ from .input_types import UuidsBoundITUserFilter
 from .input_types import UuidsBoundLeaveFilter
 from .input_types import UuidsBoundOrganisationUnitFilter
 from .input_types import ValidityInput
+from .itsystem_create import ItsystemCreate
+from .itsystem_create import ItsystemCreateItsystemCreate
+from .itsystem_delete import ItsystemDelete
+from .itsystem_delete import ItsystemDeleteItsystemDelete
+from .itsystem_read import ItsystemRead
+from .itsystem_read import ItsystemReadItsystems
+from .itsystem_read import ItsystemReadItsystemsObjects
+from .itsystem_read import ItsystemReadItsystemsObjectsCurrent
+from .itsystem_update import ItsystemUpdate
+from .itsystem_update import ItsystemUpdateItsystemUpdate
 from .person_create import PersonCreate
 from .person_create import PersonCreateEmployeeCreate
 from .person_delete import PersonDelete
@@ -230,6 +240,16 @@ __all__ = [
     "ITUserTerminateInput",
     "ITUserUpdateInput",
     "ItSystemboundclassfilter",
+    "ItsystemCreate",
+    "ItsystemCreateItsystemCreate",
+    "ItsystemDelete",
+    "ItsystemDeleteItsystemDelete",
+    "ItsystemRead",
+    "ItsystemReadItsystems",
+    "ItsystemReadItsystemsObjects",
+    "ItsystemReadItsystemsObjectsCurrent",
+    "ItsystemUpdate",
+    "ItsystemUpdateItsystemUpdate",
     "ItuserBoundAddressFilter",
     "ItuserBoundRoleBindingFilter",
     "KLECreateInput",
