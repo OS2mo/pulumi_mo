@@ -1,9 +1,12 @@
 # SPDX-FileCopyrightText: Magenta ApS <https://magenta.dk>
 # SPDX-License-Identifier: MPL-2.0
+import inspect
 from abc import ABC
 from abc import abstractmethod
 from collections.abc import Callable
+from functools import partial
 from typing import Any
+from typing import cast
 from uuid import UUID
 
 from authlib.integrations.httpx_client import OAuth2Client
@@ -71,6 +74,17 @@ class MOGraphQLProvider(ResourceProvider):
             self.session.__exit__(None, None, None)
 
 
+def get_parameter_type(method: Callable, parameter_name: str) -> type[BaseModel]:
+    signature = inspect.signature(method)
+    parameter = signature.parameters[parameter_name]
+    parameter_type = parameter.annotation
+    return cast(type[BaseModel], parameter_type)
+
+
+get_input_model_from_mutator = partial(get_parameter_type, parameter_name="input")
+get_filter_model_from_query = partial(get_parameter_type, parameter_name="filter")
+
+
 class AbstractMOGraphQLProvider(ABC, MOGraphQLProvider):
     @property
     @abstractmethod
@@ -78,9 +92,8 @@ class AbstractMOGraphQLProvider(ABC, MOGraphQLProvider):
         raise NotImplementedError
 
     @property
-    @abstractmethod
     def read_filter_model(self) -> type[BaseModel]:
-        raise NotImplementedError
+        return get_filter_model_from_query(self.read_method)
 
     @property
     @abstractmethod
@@ -88,9 +101,8 @@ class AbstractMOGraphQLProvider(ABC, MOGraphQLProvider):
         raise NotImplementedError
 
     @property
-    @abstractmethod
     def create_input_model(self) -> type[BaseModel]:
-        raise NotImplementedError
+        return get_input_model_from_mutator(self.create_method)
 
     @property
     @abstractmethod
@@ -98,9 +110,8 @@ class AbstractMOGraphQLProvider(ABC, MOGraphQLProvider):
         raise NotImplementedError
 
     @property
-    @abstractmethod
     def update_input_model(self) -> type[BaseModel]:
-        raise NotImplementedError
+        return get_input_model_from_mutator(self.update_method)
 
     @property
     @abstractmethod
