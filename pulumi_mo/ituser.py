@@ -11,35 +11,35 @@ from pulumi.dynamic import Resource
 from .base import AutoMOGraphQLProvider
 
 
-class PersonProvider(AutoMOGraphQLProvider):
-    collection: str = "person"
+class ITUserProvider(AutoMOGraphQLProvider):
+    collection: str = "ituser"
 
     def check(self, _olds: dict[str, Any], news: dict[str, Any]) -> CheckResult:
         failures: list[CheckFailure] = []
-        for attribute in ["given_name", "surname"]:
-            if attribute not in news or news[attribute] == "":
-                failures.append(
-                    CheckFailure(
-                        attribute,
-                        reason="Attribute cannot be the empty string",
-                    )
+        if "user_key" not in news or news["user_key"] == "":
+            failures.append(
+                CheckFailure(
+                    "user_key",
+                    reason="Attribute cannot be the empty string",
                 )
-
+            )
         return CheckResult(news, failures)
 
 
-class PersonArgs:
-    given_name: Input[str]
-    surname: Input[str]
+class ITUserArgs:
+    user_key: Input[str]
+    person: Input[str]
+    itsystem: Input[str]
 
-    def __init__(self, given_name: str, surname: str) -> None:
-        self.given_name = given_name
-        self.surname = surname
+    def __init__(self, user_key: str, person: Input[str], itsystem: Input[str]) -> None:
+        self.user_key = user_key
+        self.person = person
+        self.itsystem = itsystem
 
 
-class Person(Resource):
+class ITUser(Resource):
     def __init__(
-        self, name: str, args: PersonArgs, opts: ResourceOptions | None = None
-    ):
-        full_args = {"given_name": None, "surname": None, **vars(args)}
-        super().__init__(PersonProvider(), name, full_args, opts)
+        self, name: str, args: ITUserArgs, opts: ResourceOptions | None = None
+    ) -> None:
+        full_args = {"user_key": None, "person": None, "itsystem": None, **vars(args)}
+        super().__init__(ITUserProvider(), name, full_args, opts)
