@@ -62,7 +62,7 @@ class ClassArgs:
         self.itsystem = itsystem
 
 
-class Class(Resource):
+class Class(Resource, name="Class"):
     def __init__(self, name: str, args: ClassArgs, opts: ResourceOptions | None = None):
         full_args = {
             "user_key": None,

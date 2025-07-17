@@ -38,7 +38,7 @@ class RoleBindingArgs:
         self.role = role
 
 
-class RoleBinding(Resource):
+class RoleBinding(Resource, name="RoleBinding"):
     def __init__(
         self, name: str, args: RoleBindingArgs, opts: ResourceOptions | None = None
     ):

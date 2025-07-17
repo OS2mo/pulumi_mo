@@ -37,7 +37,7 @@ class ITUserArgs:
         self.itsystem = itsystem
 
 
-class ITUser(Resource):
+class ITUser(Resource, name="ITUser"):
     def __init__(
         self, name: str, args: ITUserArgs, opts: ResourceOptions | None = None
     ) -> None:

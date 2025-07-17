@@ -37,7 +37,7 @@ class PersonArgs:
         self.surname = surname
 
 
-class Person(Resource):
+class Person(Resource, name="Person"):
     def __init__(
         self, name: str, args: PersonArgs, opts: ResourceOptions | None = None
     ):

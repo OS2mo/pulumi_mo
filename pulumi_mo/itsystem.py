@@ -46,7 +46,7 @@ class ITSystemArgs:
         self.name = name
 
 
-class ITSystem(Resource):
+class ITSystem(Resource, name="ITSystem"):
     def __init__(
         self, name: str, args: ITSystemArgs, opts: ResourceOptions | None = None
     ) -> None:
