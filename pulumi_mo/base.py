@@ -102,6 +102,11 @@ class AbstractMOGraphQLProvider(ABC, MOGraphQLProvider):
     def update_input_model(self) -> type[BaseModel]:
         raise NotImplementedError
 
+    @property
+    @abstractmethod
+    def delete_method(self) -> Callable:
+        raise NotImplementedError
+
     def _read_by_filter(self, filter: dict[str, Any]) -> dict[str, Any] | None:
         result = self.read_method(filter=parse_obj_as(self.read_filter_model, filter))
         entity = only(result.objects)
@@ -141,3 +146,7 @@ class AbstractMOGraphQLProvider(ABC, MOGraphQLProvider):
             )
         )
         return UpdateResult({**props})
+
+    def delete(self, id: str, props: dict[str, Any]) -> None:
+        uuid = UUID(id)
+        self.delete_method(uuid=uuid)

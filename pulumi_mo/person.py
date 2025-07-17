@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: MPL-2.0
 from collections.abc import Callable
 from typing import Any
-from uuid import UUID
 
 from pulumi import Input
 from pulumi import ResourceOptions
@@ -55,9 +54,9 @@ class PersonProvider(AbstractMOGraphQLProvider):
     def update_input_model(self) -> type[BaseModel]:
         return EmployeeUpdateInput
 
-    def delete(self, id: str, props: dict[str, Any]) -> None:
-        uuid = UUID(id)
-        self.session.person_delete(uuid=uuid)
+    @property
+    def delete_method(self) -> Callable:
+        return self.session.person_delete
 
 
 class PersonArgs:
