@@ -1,6 +1,5 @@
 # SPDX-FileCopyrightText: Magenta ApS <https://magenta.dk>
 # SPDX-License-Identifier: MPL-2.0
-from collections.abc import Callable
 from typing import Any
 
 from pulumi import Input
@@ -9,10 +8,12 @@ from pulumi.dynamic import CheckFailure
 from pulumi.dynamic import CheckResult
 from pulumi.dynamic import Resource
 
-from .base import AbstractMOGraphQLProvider
+from .base import AutoMOGraphQLProvider
 
 
-class PersonProvider(AbstractMOGraphQLProvider):
+class PersonProvider(AutoMOGraphQLProvider):
+    collection: str = "person"
+
     def check(self, _olds: dict[str, Any], news: dict[str, Any]) -> CheckResult:
         failures: list[CheckFailure] = []
         for attribute in ["given_name", "surname"]:
@@ -25,22 +26,6 @@ class PersonProvider(AbstractMOGraphQLProvider):
                 )
 
         return CheckResult(news, failures)
-
-    @property
-    def read_method(self) -> Callable:
-        return self.session.person_read
-
-    @property
-    def create_method(self) -> Callable:
-        return self.session.person_create
-
-    @property
-    def update_method(self) -> Callable:
-        return self.session.person_update
-
-    @property
-    def delete_method(self) -> Callable:
-        return self.session.person_delete
 
 
 class PersonArgs:
