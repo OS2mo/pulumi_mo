@@ -11,35 +11,64 @@ from pulumi.dynamic import Resource
 from .base import AutoMOGraphQLProvider
 
 
-class PersonProvider(AutoMOGraphQLProvider):
-    collection: str = "person"
+class ClassProvider(AutoMOGraphQLProvider):
+    collection: str = "class"
 
     def check(self, _olds: dict[str, Any], news: dict[str, Any]) -> CheckResult:
         failures: list[CheckFailure] = []
-        for attribute in ["given_name", "surname"]:
-            if attribute not in news or news[attribute] == "":
-                failures.append(
-                    CheckFailure(
-                        attribute,
-                        reason="Attribute cannot be the empty string",
-                    )
+        if "user_key" not in news or news["user_key"] == "":
+            failures.append(
+                CheckFailure(
+                    "user_key",
+                    reason="Attribute cannot be the empty string",
                 )
+            )
+        if "name" in news and news["name"] == "":
+            failures.append(
+                CheckFailure(
+                    "name",
+                    reason="Attribute cannot be the empty string",
+                )
+            )
+        return CheckResult(self.transform(news), failures)
 
-        return CheckResult(news, failures)
+    def transform(self, news: dict[str, Any]) -> dict[str, Any]:
+        name = news.get("name", news["user_key"].capitalize())
+        return {
+            **news,
+            "name": name,
+            "facet_uuid": news.get("facet"),
+            "it_system_uuid": news.get("itsystem"),
+        }
 
 
-class PersonArgs:
-    given_name: Input[str]
-    surname: Input[str]
+class ClassArgs:
+    user_key: Input[str]
+    name: Input[str] | None
 
-    def __init__(self, given_name: str, surname: str) -> None:
-        self.given_name = given_name
-        self.surname = surname
+    facet: Input[str]
+    itsystem: Input[str] | None
 
-
-class Person(Resource, name="Person"):
     def __init__(
-        self, name: str, args: PersonArgs, opts: ResourceOptions | None = None
-    ):
-        full_args = {"given_name": None, "surname": None, **vars(args)}
-        super().__init__(PersonProvider(), name, full_args, opts)
+        self,
+        user_key: str,
+        facet: Input[str],
+        name: str | None = None,
+        itsystem: Input[str] | None = None,
+    ) -> None:
+        self.user_key = user_key
+        self.name = name
+        self.facet = facet
+        self.itsystem = itsystem
+
+
+class Class(Resource, name="Class"):
+    def __init__(self, name: str, args: ClassArgs, opts: ResourceOptions | None = None):
+        full_args = {
+            "user_key": None,
+            "name": None,
+            "facet": None,
+            "itsystem": None,
+            **vars(args),
+        }
+        super().__init__(ClassProvider(), name, full_args, opts)

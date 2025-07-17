@@ -1,5 +1,7 @@
 from uuid import UUID
 
+from ._testing_facet_read import TestingFacetRead
+from ._testing_facet_read import TestingFacetReadFacets
 from .base_client import BaseClient
 from .class_create import ClassCreate
 from .class_create import ClassCreateClassCreate
@@ -15,6 +17,7 @@ from .input_types import ClassUpdateInput
 from .input_types import EmployeeCreateInput
 from .input_types import EmployeeFilter
 from .input_types import EmployeeUpdateInput
+from .input_types import FacetFilter
 from .input_types import ITSystemCreateInput
 from .input_types import ITSystemFilter
 from .input_types import ITSystemUpdateInput
@@ -345,3 +348,20 @@ class GraphQLClient(BaseClient):
         response = self.execute(query=query, variables=variables)
         data = self.get_data(response)
         return WhoAmI.parse_obj(data).me
+
+    def _testing_facet_read(self, filter: FacetFilter) -> TestingFacetReadFacets:
+        query = gql(
+            """
+            query __testing_facet_read($filter: FacetFilter!) {
+              facets(filter: $filter) {
+                objects {
+                  uuid
+                }
+              }
+            }
+            """
+        )
+        variables: dict[str, object] = {"filter": filter}
+        response = self.execute(query=query, variables=variables)
+        data = self.get_data(response)
+        return TestingFacetRead.parse_obj(data).facets

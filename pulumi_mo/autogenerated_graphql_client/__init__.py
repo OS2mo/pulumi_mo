@@ -1,3 +1,6 @@
+from ._testing_facet_read import TestingFacetRead
+from ._testing_facet_read import TestingFacetReadFacets
+from ._testing_facet_read import TestingFacetReadFacetsObjects
 from .base_client import BaseClient
 from .base_model import BaseModel
 from .class_create import ClassCreate
@@ -368,6 +371,9 @@ __all__ = [
     "RoleBindingTerminateInput",
     "RoleBindingUpdateInput",
     "RoleRegistrationFilter",
+    "TestingFacetRead",
+    "TestingFacetReadFacets",
+    "TestingFacetReadFacetsObjects",
     "UuidsBoundClassFilter",
     "UuidsBoundEmployeeFilter",
     "UuidsBoundEngagementFilter",

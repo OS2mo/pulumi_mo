@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: Magenta ApS <https://magenta.dk>
+# SPDX-License-Identifier: MPL-2.0
+
+query __testing_facet_read($filter: FacetFilter!) {
+  facets(filter: $filter) {
+    objects {
+      uuid
+    }
+  }
+}

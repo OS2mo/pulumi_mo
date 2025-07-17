@@ -37,16 +37,19 @@ Previewing update (test):
  +   pulumi:pulumi:Stack  demo-test  create
  +   ├─ pulumi-python:dynamic:Resource  suila      create
  +   ├─ pulumi-python:dynamic:Resource  alya        create
+ +   ├─ pulumi-python:dynamic:Resource  admin       create
  +   └─ pulumi-python:dynamic:Resource  suila:alya  create
 
 Outputs:
-    actor_uuid: "d1fec000-baad-c0de-0000-004449504558"
+    admin_uuid   : [unknown]
     itsystem_uuid: [unknown]
     ituser_uuid  : [unknown]
     person_uuid  : [unknown]
+    role_uuid    : "f7be57ab-d5b8-4d46-b1fe-6c7a04812edb"
+
 
 Resources:
-    + 4 to create
+    + 5 to create
 ```
 Showing that `pulumi` is running correctly.
 
