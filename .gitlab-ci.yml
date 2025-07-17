@@ -1,0 +1,46 @@
+# SPDX-FileCopyrightText: Magenta ApS <https://magenta.dk>
+# SPDX-License-Identifier: MPL-2.0
+
+stages:
+  - sync
+  - lint
+  - release
+  - docs
+
+variables:
+  PRECOMMIT_USE_POETRY: "true"
+  POETRY_VERSION: "2.1.3"
+
+# Conditions
+#############
+# Global Conditions
+.if-default-branch-refs: &if-default-branch-refs
+  if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+.if-tag: &if-tag
+  if: '$CI_COMMIT_TAG'
+
+.if-merge-request: &if-merge-request
+  if: '$CI_MERGE_REQUEST_IID'
+
+
+include:
+  - project: labs/salt-automation
+    file:
+      - gitlab-ci-templates/common/no-interrupt.v1.yml
+      - gitlab-ci-templates/common/conventional-commits.v1.yml
+      - gitlab-ci-templates/common/conventional-commits-changelog.v1.yml
+  - project: labs/salt-automation
+    file:
+      - gitlab-ci-templates/common/pre-commit.v1.yml
+    rules:
+      - <<: *if-merge-request
+
+
+# Workflow
+###########
+workflow:
+  rules:
+    - <<: *if-tag
+    - <<: *if-default-branch-refs
+    - <<: *if-merge-request
