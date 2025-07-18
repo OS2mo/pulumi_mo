@@ -24,6 +24,7 @@ services:
       - ./docker/entrypoint.sh:/app/entrypoint.sh:ro
       - ./docker/demo/Pulumi.yaml:/app/Pulumi.yaml:ro
       - ./docker/demo/__main__.py:/app/__main__.py:ro
+      - ../pulumi/import/data:/opt/data:ro
     networks:
       - default
       - os2mo_default
